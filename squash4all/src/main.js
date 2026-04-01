@@ -8,9 +8,12 @@ import Leaderboard from './views/Leaderboard.vue'
 import Rules from './views/Rules.vue'
 import Messages from './views/Messages.vue'
 import Profile from './views/Profile.vue'
-
+import Login from './views/Login.vue'
+import Register from './views/Register.vue'
 // Define your routes
 const routes = [
+  { path: '/login', component: Login },
+  { path: '/register', component: Register },
   { path: '/', component: Leaderboard },
   { path: '/rules', component: Rules },
   { path: '/messages', component: Messages },

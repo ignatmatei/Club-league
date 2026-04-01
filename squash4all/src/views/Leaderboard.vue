@@ -65,10 +65,10 @@
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
 
-// We ONLY hardcode the username now. We will fetch the rest from the DB.
-const myUsername = 'Matei Ignat'; 
+// Safely grab the username from LocalStorage, or fallback to empty string if not logged in
+const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
+const myUsername = storedUser.username || '';const leaderboard = ref([]);
 
-const leaderboard = ref([]);
 const selectedPlayer = ref(null);
 const isGoldenActive = ref(false);
 

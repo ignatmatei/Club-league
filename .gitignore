@@ -1,0 +1,21 @@
+# Node & Vue
+node_modules/
+dist/
+dist-ssr/
+*.local
+.env
+.env.*
+.DS_Store
+
+# Python & Flask
+__pycache__/
+*.py[cod]
+*$py.class
+instance/
+.venv/
+venv/
+env/
+
+# SQLite Database
+*.db
+*.sqlite3

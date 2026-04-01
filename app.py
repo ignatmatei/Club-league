@@ -35,6 +35,31 @@ def login():
         return jsonify({"id": user.id, "username": user.username, "points": user.points, "last_golden_match": user.last_golden_match})
     return jsonify({"error": "Invalid credentials"}), 401
 
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.json
+    
+    # Check if username already exists
+    if User.query.filter_by(username=data.get('username')).first():
+        return jsonify({"error": "Username already taken."}), 400
+        
+    # Create new user (New players start at the bottom with 50 points)
+    new_user = User(
+        username=data.get('username'),
+        password_hash=generate_password_hash(data.get('password')),
+        points=50 
+    )
+    
+    db.session.add(new_user)
+    db.session.commit()
+    
+    # Return user data so the frontend can immediately log them in
+    return jsonify({
+        "id": new_user.id, 
+        "username": new_user.username, 
+        "points": new_user.points, 
+        "last_golden_match": new_user.last_golden_match
+    })
 @app.route('/leaderboard', methods=['GET'])
 def get_leaderboard():
     users = User.query.order_by(User.points.desc(), User.id.asc()).all()
