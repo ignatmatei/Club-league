@@ -17,19 +17,19 @@ initial_players = [
 
 with app.app_context():
     db.create_all()
-    
-    # Clear existing to prevent duplicates during testing
-    User.query.delete()
-    
-    for player in initial_players:
-        # Default password is 'password' for everyone except Matei
-        pwd = "mateiignat" if player["name"] == "Matei Ignat" else "password"
-        u = User(
-            username=player["name"], 
-            password_hash=generate_password_hash(pwd),
-            points=player["points"]
-        )
-        db.session.add(u)
-    
-    db.session.commit()
-    print("Database seeded successfully! Matei Ignat account created.")
+
+    if User.query.count() > 0:
+        print("Database already seeded, skipping.")
+    else:
+        for player in initial_players:
+            # Default password is 'password' for everyone except Matei
+            pwd = "mateiignat" if player["name"] == "Matei Ignat" else "password"
+            u = User(
+                username=player["name"],
+                password_hash=generate_password_hash(pwd),
+                points=player["points"]
+            )
+            db.session.add(u)
+
+        db.session.commit()
+        print("Database seeded successfully! Matei Ignat account created.")
