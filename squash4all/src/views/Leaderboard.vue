@@ -139,7 +139,7 @@ const getRowClass = (index) => {
 const submitResult = async () => {
   try {
     // We now use currentUser.value.id, which is guaranteed to be correct!
-    await axios.post('http://localhost:5000/submit_result', {
+    await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/submit_result`, {
       challenger_id: currentUser.value.id, 
       opponent_id: selectedPlayer.value.id,
       is_golden: isGoldenActive.value
@@ -155,7 +155,7 @@ const submitResult = async () => {
 
 onMounted(async () => {
   try {
-    const res = await axios.get('http://localhost:5000/leaderboard');
+    const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/leaderboard`);
     leaderboard.value = res.data;
   } catch (err) {
     console.error("Could not load leaderboard.", err);

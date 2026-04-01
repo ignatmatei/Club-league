@@ -106,7 +106,10 @@ def confirm_result(match_id):
     db.session.commit()
     return jsonify({"message": "Match confirmed and points updated!"})
 
+import os
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True, port=5000)
+    # Use Azure's PORT environment variable, fallback to 5000 locally
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
