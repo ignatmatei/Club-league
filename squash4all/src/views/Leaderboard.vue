@@ -64,6 +64,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
+import { API_URL } from '../config.js';
 
 // Safely grab the username from LocalStorage, or fallback to empty string if not logged in
 const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
@@ -139,7 +140,7 @@ const getRowClass = (index) => {
 const submitResult = async () => {
   try {
     // We now use currentUser.value.id, which is guaranteed to be correct!
-    await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/submit_result`, {
+    await axios.post(`${API_URL}/submit_result`, {
       challenger_id: currentUser.value.id, 
       opponent_id: selectedPlayer.value.id,
       is_golden: isGoldenActive.value
@@ -155,7 +156,7 @@ const submitResult = async () => {
 
 onMounted(async () => {
   try {
-    const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/leaderboard`);
+    const res = await axios.get(`${API_URL}/leaderboard`);
     leaderboard.value = res.data;
   } catch (err) {
     console.error("Could not load leaderboard.", err);

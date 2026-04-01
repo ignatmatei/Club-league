@@ -25,6 +25,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import { API_URL } from '../config.js';
 
 const router = useRouter();
 const username = ref('');
@@ -33,7 +34,7 @@ const errorMessage = ref('');
 
 const handleLogin = async () => {
   try {
-    const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/login`, {
+    const res = await axios.post(`${API_URL}/login`, {
       username: username.value,
       password: password.value
     });
